@@ -97,6 +97,7 @@ func InitLogFile(logFileDir string) error {
 			panic(errMkdirAll.Error())
 		}
 		logFile, openErr = os.OpenFile(
+			// will create under the current working directory
 			fmt.Sprintf("%s/%s", logFileDir, logFileName),
 			os.O_WRONLY|os.O_CREATE|os.O_APPEND,
 			0666,
@@ -126,7 +127,7 @@ func dumpToLogFile(logMsg string) {
 
 func colorString(str string, fore, back int) string {
 	if back == backOrg {
-		return fmt.Sprintf("\033[%dm%s\033[0m", fore, str)
+		return fmt.Sprintf("\033[1;%dm%s\033[0m", fore, str)
 	}
 	return fmt.Sprintf("\033[1;%d;%dm%s\033[0m", fore, back, str)
 }

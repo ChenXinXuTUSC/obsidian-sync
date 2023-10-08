@@ -87,10 +87,9 @@ func ConfEntryKeys() []string {
 	return keys
 }
 
-func ConfEntry[T any](key string) T {
+func ConfEntry[T any](key string) (t T) {
 	if _, exist := confMap[key]; !exist {
-		var zero T
-		return zero
+		return
 	}
 	return confMap[key].(T)
 }

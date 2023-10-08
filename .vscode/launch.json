@@ -11,7 +11,8 @@
             "mode": "auto",
             "program": "${workspaceFolder}/main.go",
             "args": [
-                "-confpath=${workspaceFolder}/conf"
+                "--cf=${workspaceFolder}/conf",
+                "--wd=${workspaceFolder}"
             ],
             "console": "integratedTerminal"
         }
