@@ -14,7 +14,7 @@ import (
 var confMap map[string]interface{}
 
 func init() {
-	defer utils.CatchPanic()
+	defer utils.ErrorRecover()
 
 	if confMap == nil {
 		utils.Log(utils.INFO, "scanning configuration jsons...")
@@ -55,7 +55,7 @@ func init() {
 
 		wg.Add(1)
 		go func(filePath string, ch chan confItem) {
-			defer utils.CatchPanic()
+			defer utils.ErrorRecover()
 			defer wg.Done()
 
 			jsonData, fileReadErr := os.ReadFile(filePath)
@@ -95,9 +95,10 @@ func ConfEntryKeys() []string {
 	return keys
 }
 
-func ConfEntry(key string) interface{} {
+func ConfEntry[T any](key string) T {
 	if _, exist := confMap[key]; !exist {
-		return nil
+		var zero T
+		return zero
 	}
-	return confMap[key]
+	return confMap[key].(T)
 }

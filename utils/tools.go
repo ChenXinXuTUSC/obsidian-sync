@@ -1,14 +1,18 @@
 package utils
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
+	"runtime"
 )
 
-func CatchPanic() {
-	if r := recover(); r != nil {
-		Log(ERRO, r)
+func ErrorRecover() {
+	if err := recover(); err != nil {
+		var buf = make([]byte, 1<<10)
+		runtime.Stack(buf, false)
+		Log(ERRO, fmt.Sprintf("%v\n%s", err, string(buf)))
 	}
 }
 
