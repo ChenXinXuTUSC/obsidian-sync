@@ -17,7 +17,6 @@ func init() {
 	flag.StringVar(&WorkingDirectory, "wd", ".", "path to the working directory")
 	flag.Parse()
 
-
 	conf.InitConf(confPath)
 	utils.InitLogFile(conf.ConfEntry[string]("logDir"))
 	utils.DumpToFile = true
