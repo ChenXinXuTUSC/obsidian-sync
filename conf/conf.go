@@ -6,27 +6,19 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"sync"
 )
 
 var confMap map[string]interface{}
 
-func init() {
+func InitConf(confDir string) {
 	defer utils.ErrorRecover()
 
 	if confMap == nil {
 		utils.Log(utils.INFO, "scanning configuration jsons...")
 		confMap = make(map[string]interface{}, 0)
 	}
-
-	_, fileName, _, ok := runtime.Caller(0)
-	if !ok {
-		panic("error acquiring current conf.go file path")
-	}
-
-	confDir := filepath.Dir(fileName)
 
 	dirItems, dirReadErr := os.ReadDir(confDir)
 

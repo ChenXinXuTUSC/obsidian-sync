@@ -4,10 +4,17 @@ import (
 	"aliyun-oss/conf"
 	"aliyun-oss/service"
 	"aliyun-oss/utils"
+	"flag"
 	"fmt"
 )
 
 func init() {
+	var confPath string
+	flag.StringVar(&confPath, "confpath", "./conf", "path to the configuration directory")
+	flag.Parse()
+
+
+	conf.InitConf(confPath)
 	utils.InitLogFile(conf.ConfEntry[string]("logDirName"))
 	utils.DumpToFile = true
 }
