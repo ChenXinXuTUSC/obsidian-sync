@@ -43,12 +43,23 @@ func main() {
 		panic(getObjectListErr)
 	}
 
-	downloadDir := filepath.Join(WorkingDirectory, "data")
+
+
+	targetDir := filepath.Join(WorkingDirectory, conf.ConfEntry[string]("dumpDir"))
+	// delete all old directories and files first
+	objectRecords := service.OssBucketObjectListToMap(objectList)
+	syncLocalErr := service.SyncLocalToRemote(objectRecords, targetDir)
+	if syncLocalErr != nil {
+		utils.Log(utils.ERRO, syncLocalErr.Error())
+		panic(syncLocalErr)
+	}
+
+	// update all new directories and files later
 	for _, object := range objectList {
 		service.OssBucketObjectDownload(
 			conf.ConfEntry[string]("bucketName"),
 			object,
-			downloadDir,
+			targetDir,
 		)
 	}
 }

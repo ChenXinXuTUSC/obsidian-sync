@@ -109,6 +109,15 @@ func OssBucketObjectlist(bucketName string) ([]string, error) {
 	return objectList, nil
 }
 
+func OssBucketObjectListToMap(objectList []string) map[string]struct{} {
+	objectMap := make(map[string]struct{})
+	for _, objectStr := range objectList {
+		objectMap[objectStr] = struct{}{}
+	}
+
+	return objectMap
+}
+
 func OssBucketObjectDownload(bucketName, object, outDir string) error {
 	defer utils.ErrorRecover()
 
