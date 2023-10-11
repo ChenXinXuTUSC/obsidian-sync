@@ -162,6 +162,9 @@ func OssBucketObjectDownload(bucketName, object, outDir string) error {
 		return downloadErr
 	}
 
+	// update the file format
+	utils.ReplaceAllLFInFile(filePath, `(?m)([^\s])\n`, "$1  \n")
+
 	utils.Log(utils.INFO, fmt.Sprintf("update object: %s", object))
 
 	return nil

@@ -62,4 +62,11 @@ func main() {
 			targetDir,
 		)
 	}
+
+	// reformat the line feed as I didn't write
+	// use standard line feed for markdown.
+	// reErr := service.ReplaceLineFeed(targetDir)
+	// if reErr != nil {
+	// 	panic(reErr)
+	// }
 }
